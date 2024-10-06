@@ -21,8 +21,9 @@ trapServer -host <hostname> -port <portnumber> -cert <serverCertFile> -key <serv
 # Result example:
 
 VPN moment:
-193.19.207.217 Country: Spain (ES)
-Timezone: Europe/Kyiv
+-- 193.19.207.217 Country: Spain (ES)
+
+-- Timezone: Europe/Kyiv
 
 - IP: 193.19.207.217
 - Status: success
@@ -40,10 +41,14 @@ Timezone: Europe/Kyiv
 - Proxy/VPN: true
 - Hosting: false
 
+##User-agent:
+
 - Raw: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
 - OS: Linux (Version: 115.0)
 - Browser: Firefox (Version: 115.0)
 - Device:  (Type: Desktop)
+
+##JS:
 
 - Timezone: Europe/Kyiv
 - Monitor Resolution: 1920x1080
