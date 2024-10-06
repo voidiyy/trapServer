@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>. . .</title>
+</head>
+<body>
+<h1>. . .</h1>
+<canvas id="canvas" width="200" height="100" style="display:none;"></canvas>
+<script>
+    function getCanvasFingerprint() {
+        let canvas = document.getElementById('canvas');
+        let context = canvas.getContext('2d');
+
+        context.font = '16px Arial';
+        context.fillText('Canvas Fingerprinting', 10, 50);
+        context.strokeStyle = 'red';
+        context.beginPath();
+        context.arc(100, 75, 50, 0, 2 * Math.PI);
+        context.stroke();
+
+        return canvas.toDataURL();
+    }
+
+    function getDeviceInformation() {
+        return {
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            monitorResolution: `${screen.width}x${screen.height}`,
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+            hardwareConcurrency: navigator.hardwareConcurrency || 'N/A',
+            viewportSize: `${window.innerWidth}x${window.innerHeight}`,
+            deviceMemory: navigator.deviceMemory || 'N/A',
+            platform: navigator.platform || 'N/A',
+            touchSupport: 'ontouchstart' in window || 'maxTouchPoints' in navigator || 'msMaxTouchPoints' in navigator,
+            maxTouchPoints: navigator.maxTouchPoints || 0,
+            cpuClass: navigator.cpuClass || 'N/A',
+            screenColorDepth: screen.colorDepth || 'N/A',
+        };
+    }
+
+    function sendFingerprint() {
+        let canvasData = getCanvasFingerprint();
+        let deviceInfo = getDeviceInformation();
+
+        const fingerprintData = {
+            canvasData: canvasData,
+            deviceInfo: deviceInfo
+        };
+
+        fetch('/fingerprint', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(fingerprintData)
+        })
+            .then(response => response.json())
+            .then(data => console.log('Fingerprint sent:', data))
+            .catch(error => console.error('Error sending fingerprint:', error));
+    }
+
+    window.onload = sendFingerprint;
+</script>
+</body>
+</html>
